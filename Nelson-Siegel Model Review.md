@@ -5,7 +5,6 @@ factor interpolation of the term structure
 The Nelson-Siegel model is widely used in practice for fitting the term structure of interest rates. Nelson-Sigel and its development Nelson-Siegel-Svensson curves provide a parameteric formula specifying the forward rate function. 
 
 
-
 a grid search for an OLS approach using a fixed shape parameter are popular estimation procedures.
 
 **Nelson-Siegel Curve:**
@@ -27,6 +26,7 @@ This contains three components:
 **Nelson-Siegel-Svensson Curve:**
 
 Svensson (1994): development of nelson-siegel model, increasing the flexibiility of NS model via adding the fourth parameter, allowing for a second hump-shape or a U-shape
+
 $$
 y(t) = \beta_0 + \beta_1 \Bigg(\frac{1-e^{\frac{-t}{\tau_1}}}{t / \tau_1}\Bigg) + \beta_2 \Bigg(\frac{1-e^{\frac{-t}{\tau_1}}}{t / \tau_1} - e^{\frac{-t}{\tau_1}}\Bigg) + \beta_3 \Bigg(\frac{1-e^{\frac{-t}{\tau_2}}}{t / \tau_2} - e^{\frac{-t}{\tau_2}}\Bigg)
 $$
