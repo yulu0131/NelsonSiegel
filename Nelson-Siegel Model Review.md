@@ -24,7 +24,7 @@ $$
 
 where 
 - $y(\tau)$ : yield with maturity of $\tau$-month
-- $\beta_0$: **positive**, long-term forward rate to converge.
+- $\beta_0$: **level**, **positive**, long-term forward rate to converge.
 - $\beta_1$: **slope**, monotonically decreasing if negative, and vice versa, indicating the **short-term** component.
 - $\beta_2$: **curvature**, generate a hump-shape if positive, or a U-shape if negative, indicating the **mid-term** contribution.
 
@@ -58,11 +58,12 @@ $$
 ![Screenshot 2022-12-15 at 16.55.14](../../Library/Application%20Support/typora-user-images/Screenshot%202022-12-15%20at%2016.55.14.png)
 
 
+
 ## Trival
 
 ### Estimation of decay factor
 
-The most difficult part of the model estimation is the restrictions on parameter $\tau_1$ and $\tau_2$
+The most difficult part of the model estimation is the restrictions on parameter $\lambda_1$ and $\lambda_2$
 
 
 
@@ -76,7 +77,7 @@ Svensson (1995) suggests an NSS model extended from NS model and this model is w
 
 The instantaneous forward rate is the solution to a second-order differential equation with two equal roots. 
 $$
-y(\tau) = \beta_0 + \beta_1 \Bigg(\frac{1-e^{-\lambda_1\tau}}{\lambda_1\tau}\Bigg) + \beta_2 \Bigg(\frac{1-e^{-\lambda_1\tau}}{\lambda_1\tau} - e^{-\lambda_1\tau}\Bigg) + \beta_3 \Bigg(\frac{1-e^{-\lambda_2\tau}}{\lambda_2\tau} - e^{-\lambda_2\tau}\Bigg)
+y(t) = \beta_0 + \beta_1 \Bigg(\frac{1-e^{\frac{-t}{\tau_1}}}{t / \tau_1}\Bigg) + \beta_2 \Bigg(\frac{1-e^{\frac{-t}{\tau_1}}}{t / \tau_1} - e^{\frac{-t}{\tau_1}}\Bigg) + \beta_3 \Bigg(\frac{1-e^{\frac{-t}{\tau_2}}}{t / \tau_2} - e^{\frac{-t}{\tau_2}}\Bigg)
 $$
 
 
@@ -93,13 +94,15 @@ The nelson-siegel curve can be interpreted as a factor model with three factors 
 
 ## Model Calibration
 
+OLS based calibration might work well given the initial comparsion between trial results and library results
 
+![Screenshot 2022-12-22 at 14.37.11](../../Library/Application%20Support/typora-user-images/Screenshot%202022-12-22%20at%2014.37.11.png)
 
-
+After OLS based model calibration, the fitted curve fits better.
 
 ## python
 
-Fitting 中债登收益率key rate (bond_yield.py)
+implement a simple ns curve
 
 
 
