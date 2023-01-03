@@ -8,9 +8,7 @@ The **initial proposa**l for Nelson-Siegel model (NS) is to represent the range 
 
 
 
-The Nelson-Siegel model is widely used in practice for fitting the term structure of interest rates. Nelson-Sigel and its development Nelson-Siegel-Svensson curves provide a parameteric formula specifying the forward rate function. 
-
-
+The Nelson-Siegel model is widely used in practice for fitting the term structure of interest rates. Nelson-Siegel and its development Nelson-Siegel-Svensson curves provide a parameteric formula specifying the forward rate function. 
 
 
 ## Nelson-Siegel Curve
@@ -59,16 +57,6 @@ $$
 
 
 
-## Trival
-
-### Estimation of decay factor
-
-The most difficult part of the model estimation is the restrictions on parameter $\lambda_1$ and $\lambda_2$
-
-
-
-
-
 ## Development
 
 **Nelson-Siegel-Svensson Curve:**
@@ -80,29 +68,37 @@ $$
 y(t) = \beta_0 + \beta_1 \Bigg(\frac{1-e^{\frac{-t}{\tau_1}}}{t / \tau_1}\Bigg) + \beta_2 \Bigg(\frac{1-e^{\frac{-t}{\tau_1}}}{t / \tau_1} - e^{\frac{-t}{\tau_1}}\Bigg) + \beta_3 \Bigg(\frac{1-e^{\frac{-t}{\tau_2}}}{t / \tau_2} - e^{\frac{-t}{\tau_2}}\Bigg)
 $$
 
+ *Noting*: 
+
+The NSS model is also implemented in python for comparison.
 
 
- 
 
-## Model Implementation
+## Basic Structure of Model Implementation
 
 The nelson-siegel curve can be interpreted as a factor model with three factors including the constant factor, while the nelson-siegel-svensson curve can be viewed as four factors with the constant factor.
 
 
 
-
-
 ## Model Calibration
 
-OLS based calibration might work well given the initial comparsion between trial results and library results
+Fitting to the market data is a bound constrained optimization problem.
 
-![Screenshot 2022-12-22 at 14.37.11](../../Library/Application%20Support/typora-user-images/Screenshot%202022-12-22%20at%2014.37.11.png)
+A simple OLS based calibration might work well given the initial comparsion between trial results and library results. After OLS based model calibration, the fitted curve fits better than raw minimized method without any calibration.
 
-After OLS based model calibration, the fitted curve fits better.
+1. Calculate the best-fitting beta-values given $\lambda$ for time-value pairs ttm and risk-free rates.
+2. Sum of squares error function while all factors are obtained by ordinary least squares given $\lambda$.
+3. Calibrate the Nelson Siegel model.
 
-## python
+![Screenshot 2023-01-03 at 10.56.08](../../Desktop/Screenshot%202023-01-03%20at%2010.56.08.png)
 
-implement a simple ns curve
+
+
+## Python
+
+Implemenation of both NS and NSS model, together with NS model calibration
+
+see nelson-siegel repository: https://github.com/yulu0131/NelsonSiegel
 
 
 

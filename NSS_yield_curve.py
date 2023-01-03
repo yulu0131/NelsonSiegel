@@ -13,15 +13,14 @@ def nss(nss_params, t):
 
 # define function to calculate errors
 
-def nss_curve_fit(t, rates):
-    def Error(nss_params, t, rates):
-        return ((nss(nss_params, t) - rates) ** 2).sum()
+def nss_curve_fit(ttm, bond_rates):
+    def error_func(nss_params):
+        return ((nss(nss_params, ttm) - bond_rates) ** 2).sum()
 
     initial_guess = np.array([1, 1, 1, 1, 1, 1])
     res = minimize(
-        Error,
-        initial_guess,
-        args=(t, rates)
+        error_func,
+        initial_guess
     )
 
     return res.x
