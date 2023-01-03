@@ -4,11 +4,10 @@ from scipy.optimize import minimize
 # Nelson-Siegel-Svensson Model
 def nss(nss_params, t):
     beta0, beta1, beta2, beta3, lambda1, lambda2 = nss_params
-    factor1 = beta0
-    factor2 = beta1 * ((1 - np.exp(-t / lambda1)) / t / lambda1)
-    factor3 = beta2 * ((1 - np.exp(-t / lambda1)) / t / lambda1) - np.exp(-t / lambda1)
-    factor4 = beta3 * ((1 - np.exp(-t / lambda2)) / t / lambda2) - np.exp(-t / lambda2)
-    fitted = factor1 + factor2 + factor3 + factor4
+    factor1 = ((1 - np.exp(-t / lambda1)) / t / lambda1)
+    factor2 = ((1 - np.exp(-t / lambda1)) / t / lambda1) - np.exp(-t / lambda1)
+    factor3 = ((1 - np.exp(-t / lambda2)) / t / lambda2) - np.exp(-t / lambda2)
+    fitted = beta0 + beta1*factor1 + beta2*factor2 + beta3*factor3
     return fitted
 
 # define function to calculate errors
@@ -17,7 +16,7 @@ def nss_curve_fit(ttm, bond_rates):
     def error_func(nss_params):
         return ((nss(nss_params, ttm) - bond_rates) ** 2).sum()
 
-    initial_guess = np.array([1, 1, 1, 1, 1, 1])
+    initial_guess = np.array([1.0, 1.0, 1.0, 1.0, 1.0, 1.0])
     res = minimize(
         error_func,
         initial_guess

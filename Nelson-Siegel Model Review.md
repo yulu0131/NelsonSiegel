@@ -57,9 +57,8 @@ $$
 
 
 
-## Development
+## Development: Nelson-Siegel-Svensson Model
 
-**Nelson-Siegel-Svensson Curve:**
 
 Svensson (1995) suggests an NSS model extended from NS model and this model is widely used in many central banks,  increasing the flexibiility of NS model via adding the fourth parameter, allowing for a second hump-shape or a U-shape.
 
@@ -68,17 +67,15 @@ $$
 y(t) = \beta_0 + \beta_1 \Bigg(\frac{1-e^{\frac{-t}{\tau_1}}}{t / \tau_1}\Bigg) + \beta_2 \Bigg(\frac{1-e^{\frac{-t}{\tau_1}}}{t / \tau_1} - e^{\frac{-t}{\tau_1}}\Bigg) + \beta_3 \Bigg(\frac{1-e^{\frac{-t}{\tau_2}}}{t / \tau_2} - e^{\frac{-t}{\tau_2}}\Bigg)
 $$
 
- *Noting*: 
+### Basic Structure of Model Implementation
 
-The NSS model is also implemented in python for comparison.
+The Nelson-Siegel curve can be interpreted as a factor model with three factors including the constant factor, while the nelson-siegel-svensson curve can be viewed as four factors with the constant factor.
 
+**Noting:** 
 
+The NSS model is also implemented in python for comparison purpose.![Screenshot 2023-01-03 at 17.58.38](../../Library/Application%20Support/typora-user-images/Screenshot%202023-01-03%20at%2017.58.38.png)
 
-## Basic Structure of Model Implementation
-
-The nelson-siegel curve can be interpreted as a factor model with three factors including the constant factor, while the nelson-siegel-svensson curve can be viewed as four factors with the constant factor.
-
-
+![Screenshot 2023-01-03 at 17.33.34](../../Library/Application%20Support/typora-user-images/Screenshot%202023-01-03%20at%2017.33.34.png)
 
 ## Model Calibration
 
@@ -90,9 +87,9 @@ A simple OLS based calibration might work well given the initial comparsion betw
 2. Sum of squares error function while all factors are obtained by ordinary least squares given $\lambda$.
 3. Calibrate the Nelson Siegel model.
 
-![Screenshot 2023-01-03 at 10.56.08](../../Desktop/Screenshot%202023-01-03%20at%2010.56.08.png)
+![Screenshot 2023-01-03 at 17.41.09](../../Library/Application%20Support/typora-user-images/Screenshot%202023-01-03%20at%2017.41.09.png)
 
-
+![Screenshot 2023-01-03 at 17.56.18](../../Library/Application%20Support/typora-user-images/Screenshot%202023-01-03%20at%2017.56.18.png)
 
 ## Python
 

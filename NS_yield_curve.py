@@ -4,11 +4,9 @@ from scipy.optimize import minimize
 # Nelson-Siegel Model
 def ns(ns_params, ttm):
     beta0, beta1, beta2, lam = ns_params
-
-    factor1 = beta0
-    factor2 = beta1 * ((1 - np.exp(-ttm / lam)) / ttm / lam)
-    factor3 = beta2 * ((1 - np.exp(-ttm / lam)) / ttm / lam) - np.exp(-ttm / lam)
-    fitted = factor1 + factor2 + factor3
+    factor1 = ((1 - np.exp(-ttm / lam)) / ttm / lam)
+    factor2 = ((1 - np.exp(-ttm / lam)) / ttm / lam) - np.exp(-ttm / lam)
+    fitted = beta0 + beta1*factor1+beta2*factor2
     return fitted
 
 # define function to calculate errors
@@ -28,7 +26,7 @@ def ns_curve_fit(ttm, bond_rates):
 from numpy.linalg import lstsq
 
 #initial guess of lambda for curve optimization required
-def ns_ols(lam, ttm, bond_rates):
+def betas_ns_ols(lam, ttm, bond_rates):
     factor1 = ((1 - np.exp(-ttm / lam)) / ttm / lam)
     factor2 = ((1 - np.exp(-ttm / lam)) / ttm / lam) - np.exp(-ttm / lam)
     constant = np.ones(factor1.size)
@@ -37,11 +35,12 @@ def ns_ols(lam, ttm, bond_rates):
     lstsq_res = lstsq(factor_matrix, bond_rates, rcond=None)
     betas = lstsq_res[0]
     fitted = betas[0] + betas[1]*factor1 + betas[2]*factor2
-    return fitted
+    return fitted, betas
 
 def ns_ols_fit(ttm, bond_rates):
-    def error_ns_ols(lam):
-        return ((ns_ols(lam, ttm, bond_rates) - bond_rates) ** 2).sum()
+    def error_ns_ols(lamda_value):
+        fitted, betas_value = betas_ns_ols(lamda_value, ttm, bond_rates)
+        return ((fitted - bond_rates) ** 2).sum()
 
     initial_guess = 1.0
     res = minimize(
@@ -49,7 +48,10 @@ def ns_ols_fit(ttm, bond_rates):
         initial_guess
     )
 
-    return res.x
+    lam = res.x
+    fitted_curve, betas = betas_ns_ols(lam, ttm, bond_rates)
+
+    return betas[0], betas[1], betas[2], lam
 
 if __name__ == "__main__":
     # load data
@@ -63,6 +65,6 @@ if __name__ == "__main__":
     print("original fitted NS", fitted_data)
 
     # test calibrated data
-    lam= ns_ols_fit(t, rates)
-    calibrated_data = ns_ols(lam, t, rates)
-    print("calibrated NS", calibrated_data)
+    ols_params = ns_ols_fit(t, rates)
+    ols_data = ns(ols_params, t)
+    print("calibrated NS", ols_data)
