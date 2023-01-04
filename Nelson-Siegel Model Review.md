@@ -1,6 +1,6 @@
 # Nelson-Siegel Model
 
-*factor interpolation of the term structure, a grid search for an OLS approach using a fixed shape parameter are popular estimation procedures.*
+*factor interpolation of the term structure*
 
 The **initial proposa**l for Nelson-Siegel model (NS) is to represent the range of shapes generally associated with yield curves: **monotonic, humped and S-shaped**, highlighting the **simplicity** and **flexibility** of this model (Nelson and Siegel, 1987).
 
@@ -79,7 +79,9 @@ The NSS model is also implemented in python for comparison purpose.![Screenshot 
 
 ## Model Calibration
 
-Fitting to the market data is a bound constrained optimization problem.
+Fitting to the market data is a bound constrained optimization problem. Due to the ease in linearizing the model, a grid search or an OLS approach using a fixed shape parameter are popular estimation procedures.
+
+
 
 A simple OLS based calibration might work well given the initial comparsion between trial results and library results. After OLS based model calibration, the fitted curve fits better than raw minimized method without any calibration.
 
@@ -101,9 +103,9 @@ see nelson-siegel repository: https://github.com/yulu0131/NelsonSiegel
 
 ## References
 
-Nelson, C., and Siegel, A. F., 'Parsimonious Modeling of Yield Curves', Journal of Business, Vol. 60 (October 1987), 473-489.
+Annaert, Jan and Claes, Anouk G. P. and Claes, Anouk G. P. and de Ceuster, Marc J. K. and Zhang, Hairui, 'Estimating the Yield Curve Using the Nelson-Siegel Model: A Ridge Regression Approach' (2012). *International Review of Economics & Finance*.
 
-
+Nelson, C., and Siegel, A. F., 'Parsimonious Modeling of Yield Curves', *Journal of Business*, Vol. 60 (1987), 473-489.
 
 
 
